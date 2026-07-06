@@ -20,7 +20,7 @@ app.use('/api/workouts', workoutsRouter);
 
 app.get('/api/config', (_req, res) => {
   const apiHost = codespaceName
-    ? `https://${codespaceName}-8000.githubpreview.dev`
+    ? `https://${codespaceName}-8000.app.github.dev`
     : `http://localhost:${port}`;
 
   res.json({
@@ -33,6 +33,6 @@ app.get('/api/config', (_req, res) => {
 app.listen(port, () => {
   console.log(`OctoFit Tracker API listening on port ${port}`);
   if (codespaceName) {
-    console.log(`Codespace API endpoint: https://${codespaceName}-8000.githubpreview.dev`);
+    console.log(`Codespace API endpoint: https://${codespaceName}-8000.app.github.dev`);
   }
 });
