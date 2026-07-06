@@ -1,0 +1,15 @@
+import { Router } from 'express';
+import Activity from '../models/Activity.ts';
+
+const router = Router();
+
+router.get('/', async (_req, res) => {
+  try {
+    const activities = await Activity.find().populate('user');
+    res.json(activities);
+  } catch (error) {
+    res.status(500).json({ error: 'Unable to fetch activities' });
+  }
+});
+
+export default router;
