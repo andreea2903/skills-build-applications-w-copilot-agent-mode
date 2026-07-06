@@ -1,9 +1,9 @@
 import mongoose from 'mongoose';
-import User from '../models/User.ts';
-import Team from '../models/Team.ts';
-import Activity from '../models/Activity.ts';
-import LeaderboardEntry from '../models/LeaderboardEntry.ts';
-import Workout from '../models/Workout.ts';
+import User from '../models/User';
+import Team from '../models/Team';
+import Activity from '../models/Activity';
+import LeaderboardEntry from '../models/LeaderboardEntry';
+import Workout from '../models/Workout';
 
 const connectionString = process.env.MONGODB_URI || 'mongodb://localhost:27017/octofit_db';
 
