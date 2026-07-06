@@ -1,10 +1,15 @@
-import mongoose from 'mongoose';
-const activitySchema = new mongoose.Schema({
-    user: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const mongoose_1 = __importDefault(require("mongoose"));
+const activitySchema = new mongoose_1.default.Schema({
+    user: { type: mongoose_1.default.Schema.Types.ObjectId, ref: 'User', required: true },
     type: { type: String, required: true },
     durationMinutes: { type: Number, required: true },
     caloriesBurned: { type: Number, required: true },
     date: { type: Date, required: true }
 });
-const Activity = mongoose.model('Activity', activitySchema);
-export default Activity;
+const Activity = mongoose_1.default.model('Activity', activitySchema);
+exports.default = Activity;

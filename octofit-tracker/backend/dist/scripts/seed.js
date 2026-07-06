@@ -1,25 +1,30 @@
-import mongoose from 'mongoose';
-import User from '../models/User';
-import Team from '../models/Team';
-import Activity from '../models/Activity';
-import LeaderboardEntry from '../models/LeaderboardEntry';
-import Workout from '../models/Workout';
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const mongoose_1 = __importDefault(require("mongoose"));
+const User_1 = __importDefault(require("../models/User"));
+const Team_1 = __importDefault(require("../models/Team"));
+const Activity_1 = __importDefault(require("../models/Activity"));
+const LeaderboardEntry_1 = __importDefault(require("../models/LeaderboardEntry"));
+const Workout_1 = __importDefault(require("../models/Workout"));
 const connectionString = process.env.MONGODB_URI || 'mongodb://localhost:27017/octofit_db';
 /**
  * Seed the octofit_db database with test data.
  */
 async function seedDatabase() {
     try {
-        await mongoose.connect(connectionString);
+        await mongoose_1.default.connect(connectionString);
         console.log('Connected to octofit_db');
         await Promise.all([
-            User.deleteMany({}),
-            Team.deleteMany({}),
-            Activity.deleteMany({}),
-            LeaderboardEntry.deleteMany({}),
-            Workout.deleteMany({})
+            User_1.default.deleteMany({}),
+            Team_1.default.deleteMany({}),
+            Activity_1.default.deleteMany({}),
+            LeaderboardEntry_1.default.deleteMany({}),
+            Workout_1.default.deleteMany({})
         ]);
-        const teams = await Team.create([
+        const teams = await Team_1.default.create([
             {
                 name: 'Cardio Crushers',
                 description: 'Fast-paced endurance training team',
@@ -31,7 +36,7 @@ async function seedDatabase() {
                 members: []
             }
         ]);
-        const users = await User.create([
+        const users = await User_1.default.create([
             {
                 name: 'Ava Rivera',
                 email: 'ava.rivera@example.com',
@@ -56,7 +61,7 @@ async function seedDatabase() {
         teams[0].members = [users[0]._id];
         teams[1].members = [users[1]._id];
         await Promise.all([teams[0].save(), teams[1].save()]);
-        await Activity.create([
+        await Activity_1.default.create([
             {
                 user: users[0]._id,
                 type: 'Running',
@@ -79,13 +84,13 @@ async function seedDatabase() {
                 date: new Date(Date.now() - 24 * 60 * 60 * 1000)
             }
         ]);
-        await LeaderboardEntry.create([
+        await LeaderboardEntry_1.default.create([
             { user: users[0]._id, points: 780, rank: 1 },
             { user: users[1]._id, points: 650, rank: 2 },
             { team: teams[0]._id, points: 780, rank: 1 },
             { team: teams[1]._id, points: 650, rank: 2 }
         ]);
-        await Workout.create([
+        await Workout_1.default.create([
             {
                 name: 'Morning HIIT Circuit',
                 category: 'Cardio',
@@ -109,7 +114,7 @@ async function seedDatabase() {
             }
         ]);
         console.log('Database seeding complete');
-        await mongoose.disconnect();
+        await mongoose_1.default.disconnect();
     }
     catch (error) {
         console.error('Error seeding database:', error);

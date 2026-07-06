@@ -1,20 +1,26 @@
-import './config/database';
-import express from 'express';
-import usersRouter from './routes/users';
-import teamsRouter from './routes/teams';
-import activitiesRouter from './routes/activities';
-import leaderboardRouter from './routes/leaderboard';
-import workoutsRouter from './routes/workouts';
-export const app = express();
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.startServer = exports.app = void 0;
+require("./config/database");
+const express_1 = __importDefault(require("express"));
+const users_1 = __importDefault(require("./routes/users"));
+const teams_1 = __importDefault(require("./routes/teams"));
+const activities_1 = __importDefault(require("./routes/activities"));
+const leaderboard_1 = __importDefault(require("./routes/leaderboard"));
+const workouts_1 = __importDefault(require("./routes/workouts"));
+exports.app = (0, express_1.default)();
 const port = Number(process.env.PORT || 8000);
 const codespaceName = process.env.CODESPACE_NAME;
-app.use(express.json());
-app.use('/api/users', usersRouter);
-app.use('/api/teams', teamsRouter);
-app.use('/api/activities', activitiesRouter);
-app.use('/api/leaderboard', leaderboardRouter);
-app.use('/api/workouts', workoutsRouter);
-app.get('/api/config', (_req, res) => {
+exports.app.use(express_1.default.json());
+exports.app.use('/api/users', users_1.default);
+exports.app.use('/api/teams', teams_1.default);
+exports.app.use('/api/activities', activities_1.default);
+exports.app.use('/api/leaderboard', leaderboard_1.default);
+exports.app.use('/api/workouts', workouts_1.default);
+exports.app.get('/api/config', (_req, res) => {
     const apiHost = codespaceName
         ? `https://${codespaceName}-8000.app.github.dev`
         : `http://localhost:${port}`;
@@ -24,15 +30,16 @@ app.get('/api/config', (_req, res) => {
         codespaceName: codespaceName || null
     });
 });
-export const startServer = () => {
-    return app.listen(port, () => {
+const startServer = () => {
+    return exports.app.listen(port, () => {
         console.log(`OctoFit Tracker API listening on port ${port}`);
         if (codespaceName) {
             console.log(`Codespace API endpoint: https://${codespaceName}-8000.app.github.dev`);
         }
     });
 };
+exports.startServer = startServer;
 if (process.env.NODE_ENV !== 'test') {
-    startServer();
+    (0, exports.startServer)();
 }
-export default app;
+exports.default = exports.app;
